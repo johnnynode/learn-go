@@ -15,7 +15,7 @@ func main() {
 	fmt.Println("len: ", len(m)) // len 2
 
 	delete(m, "k2")
-	fmt.Println("map:", m) // map[k1:7]
+	fmt.Println("map:", m) // map: map[k1:7]
 
 	_, prs := m["k2"]
 	fmt.Println("prs", prs) // prs: false
