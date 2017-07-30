@@ -171,6 +171,21 @@ func main() {
 
 -  go 中不存在隐式转换，所有类型转换必须显式声明
 - 转换只能发生在两种相互兼容的类型之间, 布尔类型不可以和数字进行转换
+ ```
+   import (
+    "fmt"
+    "strconv"
+   )
+
+   func main() {
+    var a int = 65
+    b := string(a)
+    c := strconv.Itoa(a)
+    fmt.Println(b) // A  备注此处系统将65通过ASCii 码的形式转换成了 A
+    fmt.Println(c) // 65 备注此处的65是字符形65
+   }
+
+ ```
 - 类型的转换格式：`<ValueA> [:]= <TypeOfValueA> (<ValueB>)` 而可选项 `:` 在变量未在上文定义的时候使用。
  ```
  var a float32 = 1.1
