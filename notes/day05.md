@@ -37,9 +37,19 @@ import (
 &^  0100 = 4
 */
 
+const (
+	B float64 = 1 << (iota * 10)
+	KB
+	MB
+	GB
+	PB
+	TB
+)
+
 func main() {
 	test1()
 	test2()
+	test3()
 }
 
 func test1() {
@@ -60,4 +70,14 @@ func test2() {
 		fmt.Println("fine!") // 不会被执行
 	}
 }
+
+func test3() {
+    fmt.Println(B)  // 1
+    fmt.Println(KB) // 1024
+    fmt.Println(MB) // 1.048576e+06
+    fmt.Println(GB) // 1.073741824e+09
+    fmt.Println(PB) // 1.099511627776e+12
+    fmt.Println(TB) // 1.125899906842624e+15
+}
+
 ```
