@@ -129,7 +129,7 @@
      func test4() {
         d := "string"
         e := 1
-        l := len(d) // 不要把计算长度放置于for中
+        l := len(d) // 不要把长度计算放置于for中,每次都会重新检查,影响性能
         for i:=1; i<=l; i++{
             e ++
             fmt.Println(e)
