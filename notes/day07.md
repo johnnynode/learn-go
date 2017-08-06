@@ -148,5 +148,154 @@
      }
  ```
 
+### __switch语句__
 
+- 可以使用任何类型或表达式作为条件语句
+- 无需break, 一旦调价你符合自动终止
+- 如果希望执行下一个case,需使用fallthrough语句
+- 支持一个初始化表达式，可以是并行方式，右侧需跟分号
+- 左大括号必须和条件语句在同一行。
+- 示例代码：
+ ```
+     package main
 
+     import (
+        "fmt"
+     )
+
+     func main() {
+        // test1()
+        // test2()
+        test3()
+        // test4()
+     }
+
+     // 无需break，匹配到则停止，不会存在穿透问题
+     func test1 () {
+        a := 1
+        switch a {
+            case 0:
+                fmt.Println("a=0")
+            case 1:
+                fmt.Println("a=1") // a=1
+            default:
+                fmt.Println("None")
+        }
+     }
+
+     // switch 中没有表达式，表达式可放在case中
+     func test2() {
+        a := 1
+        switch {
+            case a >= 0:
+                fmt.Println("a>=0") // a>=0 // 如果不添加fallthrough 只会匹配到此处，即使下面的匹配也不会往下执行
+                fallthrough // 添加fallthrough， 则会继续匹配下一个case
+            case a >= 1:
+                fmt.Println("a>=1") // a>=1
+            default:
+                fmt.Println("None")
+
+        }
+     }
+
+     // 在switch 中声明，变量范围只在switch语句块中
+     func test3() {
+        switch a := 1; {
+            case a >= 0:
+                fmt.Println("a>=0") // a>=0
+            case a >= 1:
+                fmt.Println("a>=1")
+            default:
+                fmt.Println("None")
+        }
+     }
+ ```
+
+### 跳转语句
+- 跳转语句goto, break, continue
+- 三个语法都可配合标签使用
+- 标签名区分大小写，若不使用会造成编译错误
+- Break 与 continue 配合标签可用于多层循环的跳出
+- Goto 是调整执行位置，与其它两个语句配合标签的结果并不相同
+- 实例代码：
+ ```
+      package main
+
+      import (
+        "fmt"
+      )
+
+      func main() {
+        test1()
+        test2()
+        test3()
+      }
+
+      // 突破无限循环
+      func test1 () {
+        LABEL1:
+            for{
+                for i:=0; i< 10; i++ {
+                    if i>3 {
+
+                        break LABEL1 // 单纯的break无法突破无限循环，加上LABEL1外层标签标识则可跳出
+                    }
+                    fmt.Println("i:",i)
+                }
+            }
+            fmt.Println("over")
+
+        /*
+        // 运行结果：
+        i:0
+        i:1
+        i:2
+        i:3
+        over
+        */
+      }
+
+      // 测试goto语句
+      func test2() {
+        for {
+            for i:=0; i<10; i++ {
+                if i>3 {
+                    goto LABEL2
+                }
+                fmt.Println("i:",i)
+            }
+        }
+        LABEL2:
+            fmt.Println("over")
+
+        /*
+        i: 0
+        i: 1
+        i: 2
+        i: 3
+        over
+        */
+      }
+
+      // continue
+      func test3() {
+        LABEL1:
+            for i:=0; i<3; i++ {
+                // 无限循环
+                for {
+                    fmt.Println("i:",i)
+                    continue LABEL1 // 立马跳出无限循环
+                    // fmt.Println(i) // 此处continue后的代码永远不会被执行
+                }
+
+            }
+            fmt.Println("over")
+
+        /*
+        i: 0
+        i: 1
+        i: 2
+        over
+        */
+      }
+ ```
