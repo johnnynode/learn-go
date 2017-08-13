@@ -7,7 +7,7 @@
 - 通过与匿名函数配合可在return之后修改函数计算结果
 - 如果函数体内某个变量作为defer时匿名函数的参数，则在定义defer时即已获得了拷贝，否则则是引用某个变量的地址
 - Go 中没有异常机制，但有panic/recover模式来处理错误
-- Panic 可以在任何地方引发，但recover只有在defer调用函数中有效
+- panic 可以在任何地方引发，但recover只有在defer调用函数中有效
 - 示例代码：
 ```
 package main
