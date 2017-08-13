@@ -1,4 +1,4 @@
-### __tt__
+### __struct__
 - Go 中的struct与C中的struct非常相似，并且Go没有class
 - 使用type <Name> struct{} 定义结构，名称遵循可见性规则
 - 支持指向自身的指针类型成员
