@@ -161,5 +161,4 @@ func test8() {
 	fmt.Println(a == nil) // false
 }
 
-
 ```
