@@ -147,4 +147,7 @@
 
   ```
 
+- 使用beego中的bee工具初始化项目
+ * 命令：$ `go get github.com/beego/bee` , $ `bee new myApp`,  $ `cd myApp`, $ `bee run myApp`
+ * 项目跑起, 默认端口8080
 
