@@ -30,7 +30,7 @@
  ```
   func main() {
   	mux := http.NewServeMux() // 此处 http.NewServeMux() 是较底层的东西，相当于http.ListenAndServe中的handler
-      mux.Handle("/", &myHandler{})
+    mux.Handle("/", &myHandler{})
   	mux.HandleFunc("/hello", sayHello)
 
   	err := http.ListenAndServe(":8080", mux)
@@ -51,4 +51,25 @@
 
  ```
 
--
+- 使用更底层的 http.Server 来处理请求示例
+ ```
+  func main() {
+  	server := http.Server{
+  		Addr: ":8080",
+  		Handler : &myHandler{},
+  		ReadTimeout: 5 * time.Second,
+  	}
+
+  	err := server.ListenAndServe()
+  	if err != nil {
+  		log.Fatal(err)
+  	}
+  }
+
+  type myHandler struct {}
+
+  func (* myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+  	io.WriteString(w, "URL: " + r.URL.String()) // 默认访问 localhost:8080 会输出 URL: /
+  }
+  
+ ```
