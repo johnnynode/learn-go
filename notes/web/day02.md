@@ -76,7 +76,7 @@
 
  ```
 
-- 通过map来保存注册的handler, 再进行底层ServeHTTP进行转发
+- 通过map来保存注册的handler, 再进行底层ServeHTTP进行转发 [效率最高的方法]
  ```
   var mux map[string] func(w http.ResponseWriter, r *http.Request) // 定义一个map
   func main() {
@@ -117,3 +117,34 @@
   }
 
  ```
+
+ - 创建一个静态文件服务器
+  ```
+   func main() {
+   	mux := http.NewServeMux()
+   	mux.Handle("/", &myHandler{})
+
+   	wd, err := os.Getwd()
+   	if err != nil {
+   		log.Fatal(err)
+   	}
+
+   	// StripPrefix 是去除前缀，然后 http.Dir 去定位要访问的目录
+   	mux.Handle("/static/", http.StripPrefix("/static/",
+   		http.FileServer(http.Dir(wd))))
+
+   	err = http.ListenAndServe(":8080", mux)
+   	if err != nil {
+   		log.Fatal(err)
+   	}
+   }
+
+   type myHandler struct {}
+
+   func (* myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+   	io.WriteString(w, "URL: " + r.URL.String()) // 默认访问 localhost:8080 会输出 URL: /
+   }
+
+  ```
+
+
