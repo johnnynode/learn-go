@@ -20,4 +20,14 @@ func (c *MainController) Get() {
 
 	// 刷新 http;//localhost:8080 后台打印出：appname:  myApp  httpport:  8080  runmode:  dev
 	fmt.Println("appname: ", appName, " httpport: ", httpPort, " runmode: ", runMode)
+
+	fmt.Println("==========")
+
+	beego.SetLevel(beego.LevelInformational)
+	beego.Trace("trace 1")  // 未被输出，因为trace级别小于info级别
+	beego.Info("info 1")
+	beego.Trace("trace 2")  // 未被输出，因为trace级别小于info级别
+	beego.Info("info 2")
+
+
 }

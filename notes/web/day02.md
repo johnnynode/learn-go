@@ -151,7 +151,12 @@
  * 命令：$ `go get github.com/beego/bee` , $ `bee new myApp`,  $ `cd myApp` $ `bee run myApp`
  * 项目跑起, 默认端口8080
 
-- 获取beego 配置文件信息的方法
+- 获取 beego 配置文件信息的方法
+  * 注意 go 在1.8 版本中未找到使用默认参数来获取配置文件的方法 如下
+    1. $ `beego.AppName`
+    2. $ `strconv.Itoa(beego.HttpPort)`
+    3. $ `beego.RunMode`
+    4. 以上的API不存在
  ```
   appName := beego.AppConfig.String("appname")
   httpPort := beego.AppConfig.String("httpport")
@@ -161,3 +166,14 @@
   fmt.Println("appname: ", appName, " httpport: ", httpPort, " runmode: ", runMode)
 
  ```
+
+- 设置beego的日志级别
+ ```
+  	beego.SetLevel(beego.LevelInformational)
+  	beego.Trace("trace 1") // 未被输出，因为trace级别小于info级别
+  	beego.Info("info 1")
+  	beego.Trace("trace 2") // 未被输出，因为trace级别小于info级别
+  	beego.Info("info 2")
+
+ ```
+ 以上只输出了info的日志，而trace级别低于所设置的级别，所以未被输出
