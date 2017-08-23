@@ -151,3 +151,13 @@
  * 命令：$ `go get github.com/beego/bee` , $ `bee new myApp`,  $ `cd myApp` $ `bee run myApp`
  * 项目跑起, 默认端口8080
 
+- 获取beego 配置文件信息的方法
+ ```
+  appName := beego.AppConfig.String("appname")
+  httpPort := beego.AppConfig.String("httpport")
+  runMode := beego.AppConfig.String("runmode")
+
+  // 刷新 http;//localhost:8080 后台打印出：appname:  myApp  httpport:  8080  runmode:  dev
+  fmt.Println("appname: ", appName, " httpport: ", httpPort, " runmode: ", runMode)
+
+ ```
